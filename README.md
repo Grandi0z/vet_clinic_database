@@ -1,10 +1,10 @@
 <a name="readme-top"></a>
 
 <div align="center">
-<img src="./src/assets/icon/Grandiose.png" alt="logo" width="140"  height="auto" />
+
   <br/>
 
-  <h3><b>Companies metrics</b></h3>
+  <h3><b>Vet Clinic</b></h3>
 
 </div>
 # 📗 Table of Contents
