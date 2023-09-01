@@ -45,3 +45,21 @@ SELECT species, MAX(weight_kg), MIN(weight_kg) FROM animals GROUP BY species;
 SELECT species, AVG(escape_attempts) FROM animals 
     WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31' GROUP BY species; 
 
+SELECT name FROM animals a JOIN owners o ON a.owner_id = o.id WHERE o.full_name = 'Melody Pond';
+SELECT a.name FROM animals a JOIN species s ON a.species_id = s.id WHERE s.name Like '%Pokemon%';
+SELECT full_name, name FROM animals a RIGHT JOIN owners o ON a.owner_id = o.id;
+SELECT s.name, COUNT(*) FROM animals a JOIN species s ON a.species_id = s.id GROUP BY s.name;
+SELECT a.name FROM animals a 
+    JOIN owners o ON a.owner_id = o.id
+    JOIN species s ON a.species_id = s.id WHERE s.name LIKE '%Digimon%' 
+    AND o.full_name = 'Jennifer Orwell';
+SELECT a.name, full_name FROM animals a 
+    JOIN owners o ON a.owner_id = o.id
+    JOIN species s ON a.species_id = s.id WHERE a.escape_attempts < 1 
+    AND o.full_name = 'Dean Winchester';
+SELECT full_name, COUNT(*) AS count FROM animals a
+    JOIN owners o ON a.owner_id = o.id
+    GROUP BY full_name
+    HAVING COUNT(*) = (
+        SELECT MAX(count) FROM (SELECT COUNT(*) AS count FROM animals GROUP BY owner_id) t)
+    ORDER BY full_name;
