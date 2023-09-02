@@ -42,7 +42,7 @@ CREATE TABLE specializations (
 CREATE TABLE visits (
     animals_id INT,
     vets_id INT,
-    date DATE,
+    visit_date DATE,
     PRIMARY KEY(animals_id, vets_id, date));
 
 ALTER TABLE visits ADD CONSTRAINT fk_animal FOREIGN KEY (animals_id) REFERENCES animals (id)
