@@ -26,3 +26,35 @@ ALTER TABLE animals ADD COLUMN  species_id INT;
 ALTER TABLE animals ADD COLUMN owner_id INT;
 ALTER TABLE animals ADD CONSTRAINT fk_species FOREIGN KEY(species_id) REFERENCES species(id);
 ALTER TABLE animals ADD CONSTRAINT fk_owners FOREIGN KEY(owners_id) REFERENCES owners(id);
+
+CREATE TABLE vets (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(30) NOT NULL,
+    age INT,
+    date_of_graduation DATE,
+    PRIMARY KEY(id));
+
+CREATE TABLE specializations (
+    species_id INT,
+    vets_id INT,
+    PRIMARY KEY(species_id, vets_id));
+
+CREATE TABLE visits (
+    animals_id INT,
+    vets_id INT,
+    visit_date DATE,
+    PRIMARY KEY(animals_id, vets_id, date));
+
+ALTER TABLE visits ADD CONSTRAINT fk_animal FOREIGN KEY (animals_id) REFERENCES animals (id)
+ON UPDATE CASCADE
+ON DELETE SET NULL;
+ALTER TABLE visits ADD CONSTRAINT fk_vets FOREIGN KEY (vets_id) REFERENCES vets (id)
+ON UPDATE CASCADE
+ON DELETE SET NULL;
+
+ALTER TABLE specializations ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species (id)
+ON UPDATE CASCADE
+ON DELETE SET NULL;
+ALTER TABLE specializations ADD CONSTRAINT fk_vets FOREIGN KEY (vets_id) REFERENCES vets (id)
+ON UPDATE CASCADE
+ON DELETE SET NULL;
