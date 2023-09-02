@@ -65,10 +65,10 @@ SELECT full_name, COUNT(*) AS count FROM animals a
     ORDER BY full_name;
 
 BEGIN;
-SELECT a.name, date FROM visits vi 
+SELECT a.name, visit_date FROM visits vi 
     JOIN vets v ON v.id=vi.vets_id 
     JOIN animals a ON a.id = vi.animals_id WHERE v.name='William Tatche'
-    AND date = (SELECT MAX(date) FROM visits WHERE animals_id=a.id);
+    AND visit_date = (SELECT MAX(visit_date) FROM visits WHERE animals_id=a.id);
 COMMIT;
 
 BEGIN;
@@ -85,7 +85,7 @@ SELECT v.name, sp.name FROM vets v
 COMMIT;
 
 BEGIN;
-SELECT a.name, vi.date FROM animals a
+SELECT a.name, vi.visit_date FROM animals a
     JOIN visits vi ON a.id = vi.animals_id
     JOIN vets v ON v.id = vi.vets_id 
     WHERE v.name = 'Stephanie Mendez' AND vi.visit_date BETWEEN '2020-04-01' AND '2020-10-30';
@@ -99,17 +99,17 @@ SELECT a.name, COUNT(v.animals_id) AS count FROM visits v
 COMMIT;
 
 BEGIN;
-SELECT a.name, vi.date FROM visits vi
+SELECT a.name, vi.visit_date FROM visits vi
     JOIN animals a ON a.id = vi.animals_id
     JOIN vets v ON v.id = vi.vets_id WHERE v.name='Maisy Smith' GROUP BY a.name, vi.visit_date
-    HAVING vi.date = (SELECT MIN(vi.date) FROM visits vi); 
+    HAVING vi.visit_date = (SELECT MIN(vi.visit_date) FROM visits vi); 
 COMMIT;
 
 BEGIN;
-SELECT a.name, v.name, vi.date FROM visits vi
+SELECT a.name, v.name, vi.visit_date FROM visits vi
     JOIN animals a ON a.id = vi.animals_id
     JOIN vets v ON v.id = vi.vets_id GROUP BY a.name, v.name, vi.visit_date
-    HAVING vi.date = (SELECT MAX(vi.date) FROM visits vi);
+    HAVING vi.visit_date = (SELECT MAX(vi.visit_date) FROM visits vi);
 COMMIT;
 
 BEGIN;
@@ -129,3 +129,5 @@ GROUP BY a.species_id, s.name
 ORDER BY count DESC
 LIMIT 1;
 COMMIT;
+
+
